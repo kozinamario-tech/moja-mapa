@@ -41,7 +41,11 @@
       window.ReactNativeWebView.postMessage(
         JSON.stringify({ lat: lat, lng: lng })
       );
+          // Otvori deep link sa koordinatama (zamijeni sa tvojim route-om i scheme-om)
+    var deepLink = 'YOUR_APP_SCHEME://map-result?lat=' + lat.toFixed(6) + '&lng=' + lng.toFixed(6);
+    window.location.href = deepLink;
     });
   </script>
 </body>
 </html>
+
