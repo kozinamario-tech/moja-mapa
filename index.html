@@ -30,22 +30,28 @@
     var marker = L.marker([45.8150, 15.9819]).addTo(map);
 
     // Klik event za koordinate
-    map.on('click', function(e) {
-      var lat = e.latlng.lat;
-      var lng = e.latlng.lng;
+map.on('click', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    
+    // Kreiraj popup sa koordinatama i button-om
+    var popupContent = '<p>Kliknuto na: <strong>' + lat.toFixed(6) + '</strong>, <strong>' + lng.toFixed(6) + '</strong></p>' +
+                       '<button onclick="sendToAdalo(' + lat + ', ' + lng + ')">Pošalji u Adalo</button>';
+    
+    L.popup()
+        .setLatLng(e.latlng)
+        .setContent(popupContent)
+        .openOn(map);
+});
 
-      // Pomakni marker
-      marker.setLatLng([lat, lng]);
-
-      // Vrati koordinate Adalu
-      window.ReactNativeWebView.postMessage(
-        JSON.stringify({ lat: lat, lng: lng })
-      );
-          // Otvori deep link sa koordinatama (zamijeni sa tvojim route-om i scheme-om)
+// Funkcija za slanje u Adalo (pozvana iz button-a)
+function sendToAdalo(lat, lng) {
     var deepLink = 'YOUR_APP_SCHEME://map-result?lat=' + lat.toFixed(6) + '&lng=' + lng.toFixed(6);
     window.location.href = deepLink;
+}
     });
   </script>
 </body>
 </html>
+
 
